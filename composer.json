@@ -1,7 +1,13 @@
 {
     "name": "laravel/laravel",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "O respectivo projeto se trata de um teste de competências para disputa de vaga de programador Full Stack Jr. da Buzzvel",
+    "authors": [
+        {
+            "name": "Luiz Felipe L. Pereira",
+            "email": "lf.system@outlook.com"
+        }
+    ],
     "keywords": [
         "framework",
         "laravel"
