@@ -1970,17 +1970,58 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {},
-  props: ["data"],
+  props: ["name"],
   data: function data() {
     return {
-      example: "example component"
+      userName: "",
+      listHotels: []
     };
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    this.userName = this.name.split(" ")[0];
+  },
   methods: {
-    acao: function acao() {}
+    search: function search(orderby) {
+      console.log(orderby);
+    }
   },
   beforeMount: function beforeMount() {}
 });
@@ -37693,17 +37734,76 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-8" }, [
-        _c("div", { staticClass: "card" }, [
-          _vm._m(0),
-          _vm._v(" "),
+  return _c("div", { staticClass: "container-fluid" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-5" }, [
+        _c("div", { staticClass: "card m-3" }, [
           _c("div", { staticClass: "card-body" }, [
-            _vm._v("\n          " + _vm._s(_vm.example) + "\n        ")
+            _c("div", { staticClass: "input-group mb-3" }, [
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  placeholder: "Digite local, que buscamos os hoteis para você",
+                  "aria-label": "Recipient's username",
+                  "aria-describedby": "search"
+                }
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group-append" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c("div", { staticClass: "dropdown-menu" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "dropdown-item",
+                      on: {
+                        click: function($event) {
+                          return _vm.search("pricepernight")
+                        }
+                      }
+                    },
+                    [_vm._v("Buscar por preço por noite?")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "dropdown-item",
+                      on: {
+                        click: function($event) {
+                          return _vm.search("proximity")
+                        }
+                      }
+                    },
+                    [_vm._v("Buscar por proximidade?")]
+                  )
+                ])
+              ])
+            ])
           ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "jumbotron m-3" }, [
+          _c("h1", { staticClass: "display-4" }, [
+            _vm._v("Olá " + _vm._s(_vm.userName) + " "),
+            _c("i", { staticClass: "bi bi-emoji-smile" })
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "lead" }, [
+            _vm._v(
+              "\n          Quer viajar, mas não sabe onde se hospedar?\n        "
+            )
+          ]),
+          _vm._v(" "),
+          _vm._m(1),
+          _vm._v(" "),
+          _c("hr", { staticClass: "my-4" })
         ])
-      ])
+      ]),
+      _vm._v(" "),
+      _vm._m(2)
     ])
   ])
 }
@@ -37712,8 +37812,49 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("h1", [_vm._v("Card Example")])
+    return _c(
+      "button",
+      {
+        staticClass:
+          "btn btn-outline-secondary dropdown-toggle dropdown-toggle-split",
+        attrs: {
+          type: "button",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false"
+        }
+      },
+      [_c("i", { staticClass: "bi bi-search" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [
+      _vm._v("\n          A "),
+      _c("b", [_vm._v("Th Buzzvel")]),
+      _vm._v(
+        " pode te ajudar com isso, basta pesquisar por uma cidade, endereço, estado ou país que nós lhe mostramos as melhores opções de hotéis para você. \n        "
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-7 list-hotels" }, [
+      _c("div", { staticClass: "d-flex justify-content-center loading" }, [
+        _c(
+          "div",
+          {
+            staticClass: "spinner-grow text-info",
+            staticStyle: { width: "6rem", height: "6rem" },
+            attrs: { role: "status" }
+          },
+          [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+        )
+      ])
     ])
   }
 ]
