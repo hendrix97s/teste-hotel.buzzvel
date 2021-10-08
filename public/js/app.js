@@ -2011,15 +2011,14 @@ __webpack_require__.r(__webpack_exports__);
   props: ["name"],
   data: function data() {
     return {
-      example: "example component",
-      userName: ""
+      userName: "",
+      listHotels: []
     };
   },
   mounted: function mounted() {
     this.userName = this.name.split(" ")[0];
   },
   methods: {
-    acao: function acao() {},
     search: function search(orderby) {
       console.log(orderby);
     }

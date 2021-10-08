@@ -59,15 +59,14 @@ export default {
 
   data() {
     return {
-      example: "example component",
-      userName: ""
+      userName: "",
+      listHotels:[]
     };
   },
   mounted() {
     this.userName = this.name.split(" ")[0]
   },
   methods: {
-    acao() {},
     search(orderby){
       console.log(orderby);
     }
