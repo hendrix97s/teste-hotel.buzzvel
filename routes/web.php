@@ -18,6 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
-
+Route::post('/teste', 'HotelController@searchNearbyHotels')->name('teste');
 Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
