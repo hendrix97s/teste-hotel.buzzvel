@@ -1,0 +1,11 @@
+.components{
+  
+  height: calc(100vh - 55.2px);
+}
+.list-hotels{
+  height: calc(100vh - 84px);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center
+}
