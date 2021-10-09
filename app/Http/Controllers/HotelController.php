@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Integrations\Search;
 use App\Models\Hotel;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 /**
   *
   * Classe responsável pelo pelas ações envolvendo os registros de Hotel
-  * @package className
+  * @package HotelController
   * @author Luiz F. Lima <lf.system@outlook.com>
   * @copyright Luiz F. Lima © 2021
   * @version 1.0
@@ -18,29 +18,52 @@ use Illuminate\Support\Facades\Request;
 class HotelController extends Controller{  
 
   /**
+   * Atributo de requisição
+   * @var Request
+   */
+  private Request $request;
+
+  /**
+   * Método construtor
+   * @param Request $request
+   */
+  public function __construct(Request $request){
+    $this->request = $request;
+  }
+
+  /**
    * Método repsonsável por retornar os hoteis proximos ao ponto de origem
    * @param string $originAddress
    * @param string $orderby Desired parameters “proximity” or “pricepernight”  
    * @return void
    */
-  public function searchNearbyHotels(Request $request){
-    // $originData = Search::getCoodinatesOrigin($originAddress, false);
-    // dd($originData);
-    return response()->json($request,200);
+  public function searchNearbyHotels(){
+    try {
+      $originData = Search::getCoodinatesOrigin($this->request->address, false);
+
+      if(!$originData) return response()->json(["erro"=>"endereco inexistente"],200);
+
+      $listHotels = Search::getNearbyHotels($originData['lat'], $originData['lng'], $this->request->orderby);
+
+      if(!count($listHotels)) return  response()->json(["erro"=>"sem hoteis"],200);
+      
+      return response()->json($listHotels,200);
+    } catch (\Throwable $th) {
+      return response()->json($th->getMessage(),500);
+    }
   }
 
   /**
-   * Undocumented function
-   *
-   * @param string $country
-   * @param string $country_acronym
-   * @return array
+   * Método responsável por retornar a listagem de hotéis registrado no sistema, de acordo com o país e sigla
+   * @param string $country Nome do país
+   * @param string $country_acronym Sigla do país
+   * @return array Retorna uma listagem de hotéis
    */
-  public static function get(string $country, string $country_acronym){
+  public static function get(string $state, string $stateAcronym){
     $obHotel = new Hotel();
     return $obHotel
-    ->where(['country' => $country])
-    ->where(['country_acronym' => $country_acronym])
+    ->where(['state' => $state])
+    ->where(['state_acronym' => $stateAcronym])
     ->get()->toArray();
   }
 

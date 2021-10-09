@@ -26,7 +26,7 @@ class Search{
   public static function getNearbyHotels(string $latitude, string $longitude, string $orderby = 'proximity'){
     $coordinates = $latitude.",".$longitude;
     $nearbyHotels = self::calculateNearbyHotels($coordinates);
-    return self::asortHotels($orderby,$nearbyHotels);
+    return (is_array($nearbyHotels))? self::asortHotels($orderby,$nearbyHotels) : false;
   }
 
   /**
@@ -60,8 +60,7 @@ class Search{
     $response = ($isHotel)?
       self::send('geocode', 'get', ['latlng' => $address]):
       self::send('geocode-address','get', ['address' => $address]);
-
-    return self::processResponseCoodinatesOrigin($response, $isHotel);
+    return (is_array($response))? self::processResponseCoodinatesOrigin($response, $isHotel) : false;
   }
 
   /**
@@ -113,7 +112,12 @@ class Search{
    */
   private static function calculateNearbyHotels(string $originCoordinates){
     $response = self::getCoodinatesOrigin($originCoordinates, true);
-    $nearbyHotels = HotelController::get($response['country'],$response['country_acronym']);
+    if(!is_array($response)) return false;
+
+    $state = $response['state'];
+    $stateAcronym = $response['state_acronym'];
+
+    $nearbyHotels = HotelController::get($state, $stateAcronym);
 
     $params = ['origins' => $originCoordinates];
 

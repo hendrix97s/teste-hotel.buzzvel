@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Integrations\Search;
-use Illuminate\Http\Request;
-
+/**
+  *
+  * Classe principal de exibição de views
+  * @package HomeController
+  * @author Luiz F. Lima <lf.system@outlook.com>
+  * @copyright Luiz F. Lima © 2021
+  * @version 1.0
+  */
 class HomeController extends Controller{
-  /**
-   * Create a new controller instance.
-   *
-   * @return void
-   */
-  public function __construct(){
-    // $this->middleware('auth');
-  }
 
   /**
    * Show the application dashboard.
@@ -23,7 +20,11 @@ class HomeController extends Controller{
     return view('home');
   }
 
-  public function teste(){
-    Search::getNearbyHotels('-22.3577', '-47.3849',);
+  /**
+   * Método responsável por retornar a pagina inicial
+   * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+   */
+  public function welcome(){
+    return view('welcome');
   }
 }
