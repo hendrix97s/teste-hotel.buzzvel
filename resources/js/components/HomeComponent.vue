@@ -62,8 +62,8 @@
             <div class="col-md-9">
               <div class="card-body">
                 <h5 class="card-title"><b>Hotel: {{hotel.name}}</b></h5>
-                <p class="card-text"> <b>Distância:</b> {{hotel.distance}} KM.  </p>
-                <p class="card-text"> <b>Preço por noite: {{hotel.price}} EUR</b> x km.  </p>
+                <p class="card-text"> <b>Distância:</b> {{hotel.distance}} KM. </p>
+                <p class="card-text"> <b>Preço por noite: {{hotel.price}} EUR</b> </p>
                 <p class="card-text"><small class="text-muted"><b>Tempo de viagem do ponto de origem até o hotel:</b> {{hotel.duration}}</small></p>
               </div>
             </div>
