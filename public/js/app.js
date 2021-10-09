@@ -2006,22 +2006,87 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {},
   props: ["name"],
   data: function data() {
     return {
       userName: "",
-      listHotels: []
+      listHotels: [],
+      config: {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      },
+      formSearch: {
+        orderby: '',
+        address: ''
+      },
+      loading: false,
+      warning: false,
+      danger: false,
+      success: false
     };
   },
   mounted: function mounted() {
     this.userName = this.name.split(" ")[0];
   },
   methods: {
+    // Função para buscar a listagem de hoténs de acordo com o local informado
     search: function search(orderby) {
-      console.log(orderby);
-    }
+      var _this = this;
+
+      this.formSearch.orderby = orderby;
+
+      if (this.formSearch.address.length >= 3) {
+        this.warning = false;
+        this.loading = true;
+        this.danger = false;
+        this.success = false;
+        this.listHotels = [];
+        axios.post("/search", JSON.stringify(this.formSearch), this.config).then(function (response) {
+          if (response.data.erro == 'endereco inexistente') {
+            _this.warning = true;
+            console.log(response.data.erro);
+          } else if (response.data.erro == 'sem hoteis') {
+            _this.danger = true;
+          } else {
+            _this.success = true;
+            _this.listHotels = response.data;
+          }
+        })["catch"](function (erro) {})["finally"](function () {
+          return _this.loading = false;
+        });
+      } else {
+        this.warning = true;
+      }
+    } //fim de search
+
   },
   beforeMount: function beforeMount() {}
 });
@@ -37741,12 +37806,29 @@ var render = function() {
           _c("div", { staticClass: "card-body" }, [
             _c("div", { staticClass: "input-group mb-3" }, [
               _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.formSearch.address,
+                    expression: "formSearch.address"
+                  }
+                ],
                 staticClass: "form-control",
                 attrs: {
                   type: "text",
                   placeholder: "Digite local, que buscamos os hoteis para você",
                   "aria-label": "Recipient's username",
                   "aria-describedby": "search"
+                },
+                domProps: { value: _vm.formSearch.address },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.formSearch, "address", $event.target.value)
+                  }
                 }
               }),
               _vm._v(" "),
@@ -37764,7 +37846,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("Buscar por preço por noite?")]
+                    [_vm._v("Buscar ordenado por preço?")]
                   ),
                   _vm._v(" "),
                   _c(
@@ -37777,11 +37859,54 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("Buscar por proximidade?")]
+                    [_vm._v("Buscar ordenado por proximidade?")]
                   )
                 ])
               ])
-            ])
+            ]),
+            _vm._v(" "),
+            _vm.warning
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "alert alert-warning",
+                    attrs: { role: "alert" }
+                  },
+                  [_vm._m(1), _vm._v(", insira um local válido.\n          ")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.danger
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "alert alert-danger",
+                    attrs: { role: "alert" }
+                  },
+                  [
+                    _vm._m(2),
+                    _vm._v(
+                      ", não encontramos nenhum hotel em nossos registros proximo dessa região. Tente novamente.\n          "
+                    )
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.success
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "alert alert-success",
+                    attrs: { role: "alert" }
+                  },
+                  [
+                    _vm._m(3),
+                    _vm._v(" hotéis encontrados com sucesso "),
+                    _c("b", [_vm._v(_vm._s(_vm.userName))]),
+                    _vm._v(". Aproveite!\n          ")
+                  ]
+                )
+              : _vm._e()
           ])
         ]),
         _vm._v(" "),
@@ -37797,13 +37922,69 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _vm._m(1),
-          _vm._v(" "),
-          _c("hr", { staticClass: "my-4" })
+          _vm._m(4)
         ])
       ]),
       _vm._v(" "),
-      _vm._m(2)
+      _c(
+        "div",
+        { staticClass: "col-7 list-hotels row" },
+        [
+          _vm.loading
+            ? _c(
+                "div",
+                { staticClass: "d-flex justify-content-center loading col-12" },
+                [_vm._m(5)]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm._l(_vm.listHotels, function(hotel) {
+            return _c(
+              "div",
+              { key: hotel.id, staticClass: "card card-hotel col-12 mb-3" },
+              [
+                _c("div", { staticClass: "row no-gutters" }, [
+                  _vm._m(6, true),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9" }, [
+                    _c("div", { staticClass: "card-body" }, [
+                      _c("h5", { staticClass: "card-title" }, [
+                        _c("b", [_vm._v("Hotel: " + _vm._s(hotel.name))])
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "card-text" }, [
+                        _c("b", [_vm._v("Distância:")]),
+                        _vm._v(" " + _vm._s(hotel.distance) + " KM.  ")
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "card-text" }, [
+                        _c("b", [
+                          _vm._v(
+                            "Preço por noite: " + _vm._s(hotel.price) + " EUR"
+                          )
+                        ]),
+                        _vm._v(" x km.  ")
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "card-text" }, [
+                        _c("small", { staticClass: "text-muted" }, [
+                          _c("b", [
+                            _vm._v(
+                              "Tempo de viagem do ponto de origem até o hotel:"
+                            )
+                          ]),
+                          _vm._v(" " + _vm._s(hotel.duration))
+                        ])
+                      ])
+                    ])
+                  ])
+                ])
+              ]
+            )
+          })
+        ],
+        2
+      )
     ])
   ])
 }
@@ -37824,8 +38005,35 @@ var staticRenderFns = [
           "aria-expanded": "false"
         }
       },
-      [_c("i", { staticClass: "bi bi-search" })]
+      [_c("i", { staticClass: "fas fa-search" })]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("b", [
+      _c("i", { staticClass: "bi bi-emoji-smile-upside-down" }),
+      _vm._v(" Ops")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("b", [
+      _c("i", { staticClass: "bi bi-emoji-frown" }),
+      _vm._v(" Nos desculpe")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("b", [
+      _c("i", { staticClass: "bi bi-emoji-sunglasses" }),
+      _vm._v(" hurruu!")
+    ])
   },
   function() {
     var _vm = this
@@ -37843,18 +38051,30 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-7 list-hotels" }, [
-      _c("div", { staticClass: "d-flex justify-content-center loading" }, [
-        _c(
-          "div",
-          {
-            staticClass: "spinner-grow text-info",
-            staticStyle: { width: "6rem", height: "6rem" },
-            attrs: { role: "status" }
-          },
-          [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
-        )
-      ])
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-border text-info",
+        staticStyle: { width: "6rem", height: "6rem" },
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-3" }, [
+      _c("i", {
+        staticClass: "fas fa-hotel",
+        staticStyle: {
+          "font-size": "92px",
+          "margin-top": "32px",
+          "margin-left": "22px",
+          color: "#2da4df"
+        }
+      })
     ])
   }
 ]
