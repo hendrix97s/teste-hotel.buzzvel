@@ -6,7 +6,7 @@
 
 **Descrição:** O projeto TH Buzzvel tem como objetivo retornar os hotéis mais próximos de um ponto de origem indicado pelo usuário ordenando-os por proximidade ou preço por noite de acordo com a preferência do mesmo.
 
-**Tecnologias utilizadas no projeto:** Docker, Git,  Composer, PHP7, Mysql, Laravel 7, Vue.js e Boostrap para. 
+**Tecnologias utilizadas no projeto:** Docker, Git,  Composer, PHP7, Mysql, Laravel 7, Vue.js e Boostrap. 
 
 **Integrações:** Google Maps (geocode e distancematrix) e endpoint de listagem de hotéis da Buzzvel.     
 
