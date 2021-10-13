@@ -1,7 +1,13 @@
+<br> <br>
+
+<div align="center">  
+    <img alt="Buzzvel" height="100" src="http://icons.luizlima.online/buzzvel/buzzvel.png">
+</div>
+
 <br><br>
-<h1 align="center"><a href="http://localhost:8000" target="_blank">TH Buzzvel</a></h1>
-<br><br>
-    
+
+##
+
 ### Informações do projeto:
 
 **Descrição:** O projeto TH Buzzvel tem como objetivo retornar os hotéis mais próximos de um ponto de origem indicado pelo usuário ordenando-os por proximidade ou preço por noite de acordo com a preferência do mesmo.
