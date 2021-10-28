@@ -1,7 +1,7 @@
 <br> <br>
 
 <div align="center">  
-    <img alt="Buzzvel" height="100" src="http://icons.luizlima.online/buzzvel/buzzvel.png">
+    <img alt="Buzzvel" height="100" src="https://github.com/hendrix97s/teste-hotel.buzzvel/blob/main/public/buzzvel.png">
 </div>
 
 <br><br>
